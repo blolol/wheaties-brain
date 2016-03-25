@@ -14,6 +14,10 @@ config = JSON.parse(File.read(File.expand_path(ARGV.first)))
 brane = Brane::Memory.new
 reply_pattern = /#{Regexp.escape(config['nick'])}/i
 
+def message_is_command?(message)
+  message.message.start_with? '.'
+end
+
 bot = Cinch::Bot.new do
   configure do |c|
     c.channels = config['channels']
@@ -30,13 +34,15 @@ bot = Cinch::Bot.new do
   end
 
   on :message do |message|
-    if message.channel?
+    if message.channel? && !message_is_command?(message)
       brane.add message.message
     end
   end
 
   on :message, reply_pattern do |message|
-    message.reply brane.sentence
+    unless message_is_command?(message)
+      message.reply brane.sentence
+    end
   end
 end
 
