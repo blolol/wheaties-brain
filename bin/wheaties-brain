@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'brane'
+require 'cinch'
+require 'json'
+
+if ARGV.empty?
+  $stderr.puts 'usage: wheaties-brane path/to/config.json'
+  exit 1
+end
+
+config = JSON.parse(File.read(File.expand_path(ARGV.first)))
+brane = Brane::Memory.new
+reply_pattern = /#{Regexp.escape(config['nick'])}/i
+
+bot = Cinch::Bot.new do
+  configure do |c|
+    c.channels = config['channels']
+    c.messages_per_second = config['messages_per_second'] || 100
+    c.nick = config['nick']
+    c.password = config['password']
+    c.port = config['port']
+    c.real = config['real']
+    c.server = config['server']
+    c.server_queue_size = config['server_queue_size'] || 1000
+    c.ssl.use = config['use_ssl'] || false
+    c.ssl.verify = config['verify_ssl'] || false
+    c.user = config['user']
+  end
+
+  on :message do |message|
+    if message.channel?
+      brane.add message.message
+    end
+  end
+
+  on :message, reply_pattern do |message|
+    message.reply brane.sentence
+  end
+end
+
+bot.start

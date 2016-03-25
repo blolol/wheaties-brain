@@ -1,0 +1,20 @@
+GIT
+  remote: git://github.com/raws/brane-memory.git
+  revision: 8dea52d0bf7b6dfc43debf3edddd6d11fe3702ec
+  specs:
+    brane-memory (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    cinch (2.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  brane-memory!
+  cinch (~> 2.3.1)
+
+BUNDLED WITH
+   1.11.2
