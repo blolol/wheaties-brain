@@ -10,40 +10,52 @@ if ARGV.empty?
   exit 1
 end
 
-config = JSON.parse(File.read(File.expand_path(ARGV.first)))
-brane = Brane::Memory.new
-reply_pattern = /#{Regexp.escape(config['nick'])}/i
+module Wheaties
+  class << self
+    attr_accessor :brane, :config, :reply_pattern
 
-def message_is_command?(message)
-  message.message.start_with? '.'
+    def command?(message)
+      message.message.start_with? '.'
+    end
+
+    def from_self?(message)
+      message.user.nick == Wheaties.config['nick']
+    end
+
+    def ignore?(message)
+      command?(message) || from_self?(message)
+    end
+  end
 end
 
-bot = Cinch::Bot.new do
+Wheaties.config = JSON.parse(File.read(File.expand_path(ARGV.first)))
+Wheaties.brane = Brane::Memory.new
+Wheaties.reply_pattern = /#{Regexp.escape(Wheaties.config['nick'])}/i
+
+Cinch::Bot.new do
   configure do |c|
-    c.channels = config['channels']
-    c.messages_per_second = config['messages_per_second'] || 100
-    c.nick = config['nick']
-    c.password = config['password']
-    c.port = config['port']
-    c.real = config['real']
-    c.server = config['server']
-    c.server_queue_size = config['server_queue_size'] || 1000
-    c.ssl.use = config['use_ssl'] || false
-    c.ssl.verify = config['verify_ssl'] || false
-    c.user = config['user']
+    c.channels = Wheaties.config['channels']
+    c.messages_per_second = Wheaties.config['messages_per_second'] || 100
+    c.nick = Wheaties.config['nick']
+    c.password = Wheaties.config['password']
+    c.port = Wheaties.config['port']
+    c.real = Wheaties.config['real']
+    c.server = Wheaties.config['server']
+    c.server_queue_size = Wheaties.config['server_queue_size'] || 1000
+    c.ssl.use = Wheaties.config['use_ssl'] || false
+    c.ssl.verify = Wheaties.config['verify_ssl'] || false
+    c.user = Wheaties.config['user']
   end
 
   on :message do |message|
-    if message.channel? && !message_is_command?(message)
-      brane.add message.message
+    if message.channel? && !Wheaties.ignore?(message)
+      Wheaties.brane.add message.message
     end
   end
 
-  on :message, reply_pattern do |message|
-    unless message_is_command?(message)
-      message.reply brane.sentence
+  on :message, Wheaties.reply_pattern do |message|
+    unless Wheaties.ignore?(message)
+      message.reply Wheaties.brane.sentence
     end
   end
-end
-
-bot.start
+end.start
