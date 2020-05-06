@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/raws/brane-memory.git
-  revision: 8dea52d0bf7b6dfc43debf3edddd6d11fe3702ec
+  remote: https://github.com/raws/brane-memory.git
+  revision: d61fc0468152f465456bac8b57aeae238104e8fa
   specs:
     brane-memory (0.0.1)
 
@@ -17,4 +17,4 @@ DEPENDENCIES
   cinch (~> 2.3.1)
 
 BUNDLED WITH
-   1.11.2
+   2.1.4
