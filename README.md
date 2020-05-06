@@ -1,6 +1,8 @@
+# wheaties-brain
+
 wheaties-brain combines [Brane](https://github.com/raws/brane-memory) and [Cinch](https://rubygems.org/gems/cinch) into a simple Markov chat bot.
 
-### Usage
+## Usage
 
 Create a JSON configuration file.
 
@@ -24,7 +26,7 @@ Run `bin/wheaties-brain` with the path to your configuration file.
 bin/wheaties-brain path/to/config.json
 ```
 
-### License (MIT)
+## License (MIT)
 
 Copyright (c) 2016 Ross Paffett
 
