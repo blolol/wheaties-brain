@@ -1,5 +1,6 @@
 {
   "channels": ["#foo"],
+  "learn": ["learn.example.txt"],
   "nick": "Wheaties",
   "password": "s3cr3t",
   "port": 6667,

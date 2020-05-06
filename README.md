@@ -16,6 +16,7 @@ Create a JSON configuration file. You can copy `config.example.json` as a starti
 | Key | Required? | Description |
 |-----|-----------|-------------|
 | `channels` | **Required** | An array of IRC channels to join. |
+| `learn` | Optional | An array of file paths to load into the bot's brain before connecting to the IRC server. Each file should contain one sentence per line. Each path will be expanded using Ruby's [File.expand_path](http://ruby-doc.org/core-2.7.1/File.html#method-c-expand_path). |
 | `messages_per_second` | Optional | Max messages per second to send. Default: 100. |
 | `nick` | **Required** | The bot's nickname. |
 | `password` | Optional | The server password. |

@@ -6,7 +6,7 @@ require 'cinch'
 require 'json'
 
 if ARGV.empty?
-  $stderr.puts 'usage: wheaties-brane path/to/config.json'
+  warn 'usage: wheaties-brane path/to/config.json'
   exit 1
 end
 
@@ -25,12 +25,23 @@ module Wheaties
     def ignore?(message)
       command?(message) || from_self?(message)
     end
+
+    def learn(path)
+      File.readlines(path, chomp: true).each do |line|
+        self.brane.add(line)
+      end
+    end
   end
 end
 
 Wheaties.config = JSON.parse(File.read(File.expand_path(ARGV.first)))
 Wheaties.brane = Brane::Memory.new
 Wheaties.reply_pattern = /#{Regexp.escape(Wheaties.config['nick'])}/i
+
+Array(Wheaties.config['learn']).each do |path|
+  Wheaties.learn(File.expand_path(path))
+  puts "Learned from #{File.basename(path)}"
+end
 
 Cinch::Bot.new do
   configure do |c|
