@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/blolol/cinch.git
+  revision: 745108e75811e13e67443bc147783c057bbaf844
+  branch: wheaties
+  specs:
+    cinch (2.3.5)
+
+GIT
   remote: https://github.com/raws/brane-memory.git
   revision: d61fc0468152f465456bac8b57aeae238104e8fa
   specs:
@@ -7,14 +14,13 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    cinch (2.3.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   brane-memory!
-  cinch (~> 2.3.1)
+  cinch!
 
 BUNDLED WITH
    2.1.4
