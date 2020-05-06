@@ -24,8 +24,8 @@ Create a JSON configuration file. You can copy `config.example.json` as a starti
 | `real` | **Required** | The bot's real name. |
 | `server` | **Required** | The server address. |
 | `use_ssl` | Optional | `true` enables TLS/SSL. Default: `false`. |
-| `verify_ssl` | Optional | `true` enables TLS certificate verification. Default: `false`. |
 | `user` | **Required** | The bot's username. |
+| `verify_ssl` | Optional | `true` enables TLS certificate verification. Default: `false`. |
 
 Run `bin/wheaties-brain` with the path to your configuration file as a command line argument.
 
