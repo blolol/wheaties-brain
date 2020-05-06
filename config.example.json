@@ -1,0 +1,11 @@
+{
+  "channels": ["#foo"],
+  "nick": "Wheaties",
+  "password": "s3cr3t",
+  "port": 6667,
+  "real": "Botfast of Champions",
+  "server": "irc.example.com",
+  "use_ssl": true,
+  "verify_ssl": true,
+  "user": "wheaties"
+}
